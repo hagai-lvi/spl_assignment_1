@@ -11,6 +11,8 @@
 		C3CF6AAF182C22F000221C31 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../Makefile; sourceTree = "<group>"; };
 		C3CF6AB3182C22F000221C31 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		C3CF6AB4182C22F000221C31 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
+		C3F30FC2182C3340002D7CCE /* UniCoffeeShop.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UniCoffeeShop.cpp; sourceTree = "<group>"; };
+		C3F30FC3182C3348002D7CCE /* UniCoffeeShop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UniCoffeeShop.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -44,6 +46,7 @@
 		C3CF6AB1182C22F000221C31 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				C3F30FC3182C3348002D7CCE /* UniCoffeeShop.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -52,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				C3CF6AB3182C22F000221C31 /* main.cpp */,
+				C3F30FC2182C3340002D7CCE /* UniCoffeeShop.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -206,6 +210,7 @@
 				C3CF6AB9182C22F000221C31 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
