@@ -49,7 +49,7 @@ vector<string> writeTheOutput(vector<Product> menu);
  * Calculates the final price of a certain product based on it's ingredients
  * formula is: (sum(ingredients's prices) + labor)*1.5 when 'labor'=1
  */
-double calculateFinalPrice(Product product);
+void calculateFinalPrice(Product& product);
 void writefile_H(vector<string> Vec ,string filename);
 vector<string> readfile_H(string filename);
 /** splits a string into a vector of string in each place that has a ','.

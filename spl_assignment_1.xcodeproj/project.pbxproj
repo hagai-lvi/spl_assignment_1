@@ -13,6 +13,8 @@
 		C3CF6AB4182C22F000221C31 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
 		C3F30FC2182C3340002D7CCE /* UniCoffeeShop.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UniCoffeeShop.cpp; sourceTree = "<group>"; };
 		C3F30FC3182C3348002D7CCE /* UniCoffeeShop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UniCoffeeShop.h; sourceTree = "<group>"; };
+		C3F30FC4182C3DE9002D7CCE /* main.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = main.o; sourceTree = "<group>"; };
+		C3F30FC6182C3DE9002D7CCE /* UniCoffeeShop.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = UniCoffeeShop.o; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -39,6 +41,8 @@
 		C3CF6AB0182C22F000221C31 /* bin */ = {
 			isa = PBXGroup;
 			children = (
+				C3F30FC4182C3DE9002D7CCE /* main.o */,
+				C3F30FC6182C3DE9002D7CCE /* UniCoffeeShop.o */,
 			);
 			path = bin;
 			sourceTree = "<group>";

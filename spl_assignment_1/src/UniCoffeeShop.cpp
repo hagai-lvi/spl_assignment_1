@@ -39,7 +39,7 @@ vector<Product> makeTheMenu(vector<Ingredient> ingredients, vector<string> produ
             
         }
         
-        p.finalPrice = calculateFinalPrice(p);
+        calculateFinalPrice(p);
 		cout << "in make the menu, " << p.name << "'s price is " <<p.finalPrice << endl ;
         
         if (p.finalPrice <= 5) {
@@ -120,7 +120,7 @@ vector<string> writeTheOutput(vector<Product> menu)
 	return vec;
 }
 
-double calculateFinalPrice(Product product)
+void calculateFinalPrice(Product& product)
 {
     double finalPrice = 0.0;
     for (int i=0; i < product.ingredients.size() ; i++) {
@@ -132,7 +132,7 @@ double calculateFinalPrice(Product product)
     finalPrice = finalPrice * 1.5;
     product.finalPrice = finalPrice;
 	cout << product.name << "'s price is " <<product.finalPrice << endl ;
-	return product.finalPrice;
+	//return product.finalPrice;
 }
 
 void writefile_H(vector<string> Vec ,string filename)
