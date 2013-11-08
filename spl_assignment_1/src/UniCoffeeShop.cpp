@@ -135,15 +135,15 @@ void calculateFinalPrice(Product& product)
 	//return product.finalPrice;
 }
 
-void writefile_H(vector<string> Vec ,string filename)
+void writefile_H(vector<string> toWrite ,string fileName)
 {
-	char *cstr = new char[filename.length() + 1];
-	strcpy(cstr, filename.c_str());
+	char *cstr = new char[fileName.length() + 1];
+	strcpy(cstr, fileName.c_str());
 	ofstream myfile (cstr);
 	if (myfile.is_open())
 	{
-		for (size_t i = 0; i < Vec.size(); ++i) {
-			myfile << Vec[i]<< '\n';
+		for (size_t i = 0; i < toWrite.size(); ++i) {
+			myfile << toWrite[i]<< '\n';
 		}
 		myfile.close();
 	}
@@ -151,11 +151,11 @@ void writefile_H(vector<string> Vec ,string filename)
 	
 }
 
-vector<string> readfile_H(string filename)
+vector<string> readfile_H(string fileName)
 {
 	string str;
-	char *cstr = new char[filename.length() + 1];
-	strcpy(cstr, filename.c_str());
+	char *cstr = new char[fileName.length() + 1];
+	strcpy(cstr, fileName.c_str());
 	vector<string> Vec;
 	ifstream infile (cstr);
 	if (infile.is_open())
