@@ -18,38 +18,41 @@
 #include <stdlib.h>
 using namespace std;
 
-vector<Product> makeTheMenu(vector<Ingredient> ingredients, vector<string> products)
+vector<Product*> makeTheMenu(vector<Ingredient*> ingredients, vector<string> products)
 {
-    vector<Product>  menu;
+	cout <<"################ in function makeTheMenu ################" << endl;
+    vector<Product*>*  menu = new vector<Product*>;
     for (int i = 0 ; i < products.size(); i++) {//reading the products.conf file
         vector<string> line = split_string(products[i]);
 		if (line.size()==0) {//reached the end of the file.
 			break;
 		}
-        Product p;
+        Product* p = new Product;
 		//cout <<"for i=" << i << ", line.size = " <<line.size() << endl;
-        p.name = line[0];
+        p->name = line[0];
         
         for (int j = 1 ; j<line.size() ; j++) {//fill p.ingridients
             string ingredientName = line[j];
             Ingredient* ing = searchForIngredient(ingredients, ingredientName);
             if (ing != NULL) {
-                p.ingredients.push_back(ing);
+                p->ingredients.push_back(ing);
+				cout << ing->name << " ," << ing->supplier << endl;
             }
             
         }
         
-        calculateFinalPrice(p);
-		cout << "in make the menu, " << p.name << "'s price is " <<p.finalPrice << endl ;
+        calculateFinalPrice(*p);
+		//cout << "in make the menu, " << p.name << "'s price is " <<p.finalPrice << endl ;
         
-        if (p.finalPrice <= 5) {
-            menu.push_back(p);
-			for (int i=0 ; i < p.ingredients.size() ; i++) {
-				p.ingredients[i]->isIncluded = true;
+        if (p->finalPrice <= 5) {
+            menu->push_back(p);
+			for (int i=0 ; i < p->ingredients.size() ; i++) {
+				p->ingredients[i]->isIncluded = true;
 			}
         }
     }
-    return menu;
+	cout <<"################ finished function makeTheMenu ################" << endl;
+    return *menu;
 }
 
 vector<Ingredient> readIngredients(vector<string> vec)
@@ -60,7 +63,7 @@ vector<Ingredient> readIngredients(vector<string> vec)
 		vector<string> line =split_string(vec[i]);
 		
 		if (line.size()==0) {//means that this is an empty string and that we ave reached the end of the file.
-			cout << "In function readIngredients, for i=" << i <<"line.size()=0" <<endl;
+			//cout << "In function readIngredients, for i=" << i <<"line.size()=0" <<endl;
 			break;
 		}
 		string supplier=line[0];
@@ -96,21 +99,21 @@ vector<Ingredient> readIngredients(vector<string> vec)
 			
 		}
 	}
-	cout << "In function readIngredients, ingredients_vec.size() = " << ingredients_vec.size() << endl;
+	//cout << "In function readIngredients, ingredients_vec.size() = " << ingredients_vec.size() << endl;
 	return ingredients_vec;
 }
 
-vector<string> writeTheOutput(vector<Product> menu)
+vector<string> writeTheOutput(vector<Product*> menu)
 {
 	vector<string> vec;
 	string str="";
 	for (size_t i = 0; i < menu.size(); ++i) {
 		str="";
-		str+=menu[i].name;
+		str+=menu[i]->name;
 		str+=',';       // number to be converted to a string
 		string Result;          // string which will contain the result
 		ostringstream convert;   // stream used for the conversion
-		convert << menu[i].finalPrice;      // insert the textual representation of 'Number' in the characters in the stream
+		convert << menu[i]->finalPrice;      // insert the textual representation of 'Number' in the characters in the stream
 		
 		Result = convert.str(); // set 'Result'
 		str+=Result;
@@ -131,7 +134,7 @@ void calculateFinalPrice(Product& product)
     finalPrice++;
     finalPrice = finalPrice * 1.5;
     product.finalPrice = finalPrice;
-	cout << product.name << "'s price is " <<product.finalPrice << endl ;
+	//cout << product.name << "'s price is " <<product.finalPrice << endl ;
 	//return product.finalPrice;
 }
 
@@ -192,49 +195,100 @@ vector<string> split_string(string str)
 	
 }
 
-Ingredient* searchForIngredient(vector<Ingredient> ingredients, string ingredientName)
+Ingredient* searchForIngredient(vector<Ingredient*> ingredients, string ingredientName)
 {
     for(int i = 0 ; i<ingredients.size() ; i++) {
-        if (ingredients[i].name == ingredientName) {
-            return &(ingredients[i]);
+        if (ingredients[i]->name == ingredientName) {
+            return (ingredients[i]);
         }
     }
     return NULL;
 }
 
-vector<Ingredient> newReadIngredients(vector<string> suplliers)
+vector<Ingredient*> newReadIngredients(vector<string> suplliers)
 {
-	vector<Ingredient> res;
+	vector<Ingredient*> res;
 	for (int i=0 ; i<suplliers.size(); i++) {
 		vector<string> line = split_string(suplliers[i]);
 		if (line.size()==0) {
 			break;
 		}
-		Ingredient toInsert;
-		toInsert.supplier = line[0];
-		toInsert.name = line[1];
-		toInsert.price = atof(line[2].c_str());
+		Ingredient* toInsert = new Ingredient;
+		toInsert->supplier = line[0];
+		toInsert->name = line[1];
+		toInsert->price = atof(line[2].c_str());
 		bool isInTheVector = false;
 		for (int j=0 ; (j<res.size()) & !isInTheVector ; j++) {
-			if ((res[j].name).compare(toInsert.name)==0) {
+			if ((res[j]->name).compare(toInsert->name)==0) {
 				isInTheVector = true;
-				if ((toInsert.price < res[j].price)) {
-					//cout << res[j].name << "?=?" << toInsert.name << endl;
-					cout << "Erasing " << res[j].name << " from supplier " <<res[j].supplier << res[j].price << ", Instead inserting supplier " << toInsert.supplier << toInsert.price << endl;
+				if ((toInsert->price < res[j]->price)) {
+					//cout << res[j].name << "?=?" << toInsert->name << endl;
+					//cout << "Erasing " << res[j].name << " from supplier " <<res[j].supplier << res[j].price << ", Instead inserting supplier " << toInsert.supplier << toInsert.price << endl;
 					res.erase(res.begin() + j);//remove the supllier that as the higher price
 					res.push_back(toInsert);
 				}
 			}
 		}
 		if (!isInTheVector) {
-			cout << "*Inserting " << toInsert.name << " from supplier " << toInsert.supplier << " with price " << toInsert.price << endl;
+			//cout << "*Inserting " << toInsert.name << " from supplier " << toInsert.supplier << " with price " << toInsert.price << endl;
 			res.push_back(toInsert);
 		}
 	}
-	cout << "In newReadIngredients, res.size = "<< res.size() << endl;
+	//cout << "In newReadIngredients, res.size = "<< res.size() << endl;
 	return res;
 	
 }
 
+vector<Ingredient*> makeShoppingList(vector<Product*>& menu){
+	cout << endl;
+	cout << "################ inside function makeShoppingList ################" << endl;
+	vector<Ingredient*> list;
+	for (int i = 0 ; i<menu.size(); i++) {
+		vector<Ingredient*> ingredients = menu[i]->ingredients;
+		for (int j=0 ; j<ingredients.size(); j++) {
+			bool isFound = false;
+			
+			for (int k = 0; (k<list.size()) & !isFound ; k++) {
+				if ( ingredients[j]->name.compare(list[k]->name)==0 ) { //then this ingredient is already in the list
+					isFound = true;
+				}
+			}
+			if (!isFound) {
+				list.push_back(ingredients[j]);
+			}
+		}
+	}
+	sortIngredientsBySupplier(list);
+	cout << "################ finished function makeShoppingList ################" << endl;
+	return list;
+}
 
 
+void sortIngredientsBySupplier(vector<Ingredient*>& toSort){
+	for (int i=0 ; i<toSort.size()-1 ; i++) {
+		if ((toSort[i]->supplier.compare(toSort[i+1]->supplier)) != 0) {
+			for (int j=i+1 ; j<toSort.size() ; j++) {
+				if (toSort[i]->supplier.compare(toSort[j]->supplier) == 0) {
+					Ingredient* tmp = toSort[i+1];
+					toSort[i+1] = toSort[j];
+					toSort[j] = tmp;
+				}
+			}
+		}
+	}
+}
+
+vector<string> makeTheShoppingList(vector<Ingredient*> ingredients){
+	vector<string> res;
+	string currentSupplier = ingredients[0]->supplier;
+	string lineToWrite = currentSupplier;
+	for (int i=0 ; i<ingredients.size() ; i++ ) {
+		if (ingredients[i]->supplier.compare(currentSupplier) != 0) {
+			currentSupplier = ingredients[i]->supplier;
+			res.push_back(lineToWrite);
+			lineToWrite = currentSupplier;
+		}
+		lineToWrite = lineToWrite + "," + ingredients[i]->name;
+	}
+	return res;
+}

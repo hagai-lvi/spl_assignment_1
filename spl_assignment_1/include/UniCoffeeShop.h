@@ -35,7 +35,7 @@ struct Product{
  * @param products contain each line from the 'products.conf' file in a different line.
  * @param ingredients is the output of the readIngredients function.
  */
-vector<Product> makeTheMenu(vector<Ingredient> ingredients, vector<string> products);
+vector<Product*> makeTheMenu(vector<Ingredient*> ingredients, vector<string> products);
 
 /**
  * Reads the file suplliers.conf and inserts only the cheapest supllier into this vector.
@@ -46,7 +46,7 @@ vector<Ingredient> readIngredients(vector<string> vec);
  * Gets the menu (which is vector<product>) and writes it to file Menu.out
  * and prints the ShoppingList.out file according to the items in the menu.
  */
-vector<string> writeTheOutput(vector<Product> menu);
+vector<string> writeTheOutput(vector<Product*> menu);
 
 /*
  * Calculates the final price of a certain product based on it's ingredients
@@ -76,12 +76,30 @@ vector<string> split_string(string str);
  * Looks for an ingredient with a certain name in the vector and returns it if it exists.
  * If it doesn't exist, returns NULL.
  */
-Ingredient* searchForIngredient(vector<Ingredient> ingredients, string ingredientName);
+Ingredient* searchForIngredient(vector<Ingredient*> ingredients, string ingredientName);
 
 /**
  *  Reads the vector<string> that represents the suppliers.conf file, and inserts into the result vector only the cheapes ones.
  */
-vector<Ingredient> newReadIngredients(vector<string> suplliers);
+vector<Ingredient*> newReadIngredients(vector<string> suplliers);
 
+/**
+ *  Creates a vector<string> that will represent the shopping list, based on the menu.
+ */
+vector<Ingredient*> makeShoppingList(vector<Product*>& menu);
+
+/**
+ *  Sorts by the supplier.
+ */
+void sortIngredientsBySupplier(vector<Ingredient*>& toSort);
+
+/*
+ *  Gets a vector of ingredients, and converts it to a vector of strings, in which every cell represents another supplier.
+ *  Each cell will be written according to the following format:
+ *  Supplier_Name,Ingredient_1,…,Ingredient_n
+ *  as requested in the assignment's spcification
+ *  NOTE: 'ingredients' has to be sorted by the supplier name.
+ */
+vector<string> makeTheShoppingList(vector<Ingredient*> ingredients);
 
 #endif
